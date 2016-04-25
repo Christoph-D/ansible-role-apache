@@ -27,6 +27,11 @@
   </Directory>
 {% endif %}
 
+{% if apache_log_path is defined %}
+  ErrorLog "{{ apache_log_path }}/{{ vhost.servername }}_error.log"
+  CustomLog "{{ apache_log_path }}/{{ vhost.servername }}_access.log" combined
+{% endif %}
+
   ServerSignature Off
 
 {% if vhost.extra_parameters is defined %}
@@ -75,6 +80,11 @@
     Require all granted
 {% endif %}
   </Directory>
+{% endif %}
+
+{% if apache_log_path is defined %}
+  ErrorLog "{{ apache_log_path }}/{{ vhost.servername }}_error_ssl.log"
+  CustomLog "{{ apache_log_path }}/{{ vhost.servername }}_access_ssl.log" combined
 {% endif %}
 
   ServerSignature Off

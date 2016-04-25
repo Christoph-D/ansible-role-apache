@@ -7,14 +7,12 @@
 {% if vhost.serveralias is defined %}
   ServerAlias {{ vhost.serveralias }}
 {% endif %}
-{% if vhost.documentroot is defined %}
-  DocumentRoot "{{ vhost.documentroot }}"
-{% endif %}
-
 {% if vhost.serveradmin is defined %}
   ServerAdmin {{ vhost.serveradmin }}
 {% endif %}
+
 {% if vhost.documentroot is defined %}
+  DocumentRoot "{{ vhost.documentroot }}"
   <Directory "{{ vhost.documentroot }}">
     AllowOverride {{ vhost.allow_override | default(apache_allow_override) }}
     Options {{ vhost.options | default(apache_options) }}
@@ -34,9 +32,7 @@
 
   ServerSignature Off
 
-{% if vhost.extra_parameters is defined %}
-  {{ vhost.extra_parameters }}
-{% endif %}
+  {{ vhost.extra_parameters | default("") | indent(2) }}
 </VirtualHost>
 
 {% endfor %}
@@ -49,8 +45,8 @@
 {% if vhost.serveralias is defined %}
   ServerAlias {{ vhost.serveralias }}
 {% endif %}
-{% if vhost.documentroot is defined %}
-  DocumentRoot "{{ vhost.documentroot }}"
+{% if vhost.serveradmin is defined %}
+  ServerAdmin {{ vhost.serveradmin }}
 {% endif %}
 
   SSLEngine on
@@ -66,10 +62,8 @@
   SSLCertificateChainFile {{ vhost.certificate_chain_file }}
 {% endif %}
 
-{% if vhost.serveradmin is defined %}
-  ServerAdmin {{ vhost.serveradmin }}
-{% endif %}
 {% if vhost.documentroot is defined %}
+  DocumentRoot "{{ vhost.documentroot }}"
   <Directory "{{ vhost.documentroot }}">
     AllowOverride {{ vhost.allow_override | default(apache_allow_override) }}
     Options {{ vhost.options | default(apache_options) }}
@@ -89,9 +83,7 @@
 
   ServerSignature Off
 
-{% if vhost.extra_parameters is defined %}
-  {{ vhost.extra_parameters }}
-{% endif %}
+  {{ vhost.extra_parameters | default("") | indent(2) }}
 </VirtualHost>
 
 {% endif %}

@@ -13,3 +13,11 @@ __apache_packages:
 apache_ports_configuration_items:
   - regexp: "^Listen "
     line: "Listen {{ apache_listen_port }}"
+
+apache_security_configuration_items:
+  - regexp: "^ServerTokens "
+    line: "ServerTokens Prod"
+  - regexp: "^ServerSignature "
+    line: "ServerSignature Off"
+  - regexp: "^TraceEnable "
+    line: "TraceEnable Off"

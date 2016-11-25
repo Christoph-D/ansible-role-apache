@@ -9,6 +9,15 @@
   with_items: "{{ apache_ports_configuration_items }}"
   notify: restart apache
 
+- name: Set more secure defaults.
+  lineinfile:
+    dest: "{{ apache_server_root }}/apache2.conf"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+  with_items: "{{ apache_security_configuration_items }}"
+  notify: restart apache
+
 - name: Enable Apache mods.
   file:
     src: "{{ apache_server_root }}/mods-available/{{ item }}"
